@@ -32,6 +32,7 @@ var inspect = new Vue({
                                               return;
                                           }
 
+                                          // 示例
                                           var demoMessage = '{"type":"report","data":{"info":{"Url":"\/v1.1\/api\/user","BaseUrl":"","PathInfo":"\/v1.1\/api\/user","Port":"80","Status":"200","Method":"POST","UserIP":"172.18.0.1","ContentType":"application\/x-www-form-urlencoded; charset=utf-8","Host":"http:\/\/your.api.domain.com","UserAgent":"Paw\/3.1.5 (Macintosh; OS X\/10.13.5) GCDHTTPRequest","RequestTime":"20:43:39","RequestTime2":"1529844219","RequestTime3":"1529844221","RunTime":"0.271s"},"request":{"POST":{"nickname":"Hello"},"GET":{"test":"off"},"HEADERS":{"CONTENT-LENGTH":"19","USER-AGENT":"Paw\/3.1.5 (Macintosh; OS X\/10.13.5) GCDHTTPRequest","CONNECTION":"close","HOST":"your.api.domain.com","COOKIE":"PHPSESSID=ih9t9fjl5nbptgbgqsqtd0i7i5;","CONTENT-TYPE":"application\/x-www-form-urlencoded; charset=utf-8","USER-TOKEN":"167i0wow2418o3gvr"},"COOKIES":{"readOnly":"1"}},"response":{"BODY":{"code":"1","msg":"success","data":{"user_id":"9999999999","nickname":"Hello"}},"COOKIES":{"readOnly":"0"}}}}';
                                           var demoMessage = JSON.parse(demoMessage);
                                           that.items.push(demoMessage.data);
@@ -39,6 +40,7 @@ var inspect = new Vue({
                                           var demoMessage = '{"type":"report","data":{"info":{"Url":"\/v1.1\/api\/user","BaseUrl":"","PathInfo":"\/v1.1\/api\/user","Port":"80","Status":"200","Method":"POST","UserIP":"172.18.0.1","ContentType":"application\/x-www-form-urlencoded; charset=utf-8","Host":"http:\/\/your.api.domain.com","UserAgent":"Paw\/3.1.5 (Macintosh; OS X\/10.13.5) GCDHTTPRequest","RequestTime":"20:43:42","RequestTime2":"1529844219","RequestTime3":"1529844221","RunTime":"0.283s"},"request":{"POST":{"nickname":"Hello1"},"GET":{"test":"off"},"HEADERS":{"CONTENT-LENGTH":"19","USER-AGENT":"Paw\/3.1.5 (Macintosh; OS X\/10.13.5) GCDHTTPRequest","CONNECTION":"close","HOST":"your.api.domain.com","COOKIE":"PHPSESSID=ih9t9fjl5nbptgbgqsqtd0i7i5;","CONTENT-TYPE":"application\/x-www-form-urlencoded; charset=utf-8","USER-TOKEN":"167i0wow2418o3gvr"},"COOKIES":{"readOnly":"1"}},"response":{"BODY":{"code":"1","msg":"success","data":{"user_id":"9999999999","nickname":"Hello1"}},"COOKIES":{"readOnly":"0"}}}}';
                                           var demoMessage = JSON.parse(demoMessage);
                                           that.items.push(demoMessage.data);
+                                          // 示例
 
                                           // var data = eval("(" + event.data + ")");
                                           var message = JSON.parse(event.data);
