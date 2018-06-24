@@ -1,0 +1,13 @@
+{
+    "name": "lilei/easyim",
+    "authors": [
+        {
+            "name": "Lee",
+            "email": "lonisy@163.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"Easyim\\": "src/"}
+    }
+}

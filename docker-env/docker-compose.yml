@@ -1,0 +1,18 @@
+version: '2'
+services:
+  redis32:
+    build: ./Redis/3.2.10
+    ports:
+      - "6379:6379"
+    volumes:
+      - /data/database/Redis:/data
+    container_name: redis32
+  inspect:
+    build: ./PHP/7.0-CLI
+    ports:
+      - "9511:9511"
+    volumes:
+      - /data/web/inspect.uuzu.com:/data
+    links:
+      - "redis32:redis32con"
+    container_name: inspect

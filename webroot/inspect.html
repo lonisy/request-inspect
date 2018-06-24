@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Lonisy@163.com">
+    <link rel="icon" href="favicon.ico">
+    <title>Request Inspect</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/inspect.css" rel="stylesheet">
+    <link href="assets/Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="bs-docs-home">
+<a id="skippy" class="sr-only sr-only-focusable" href="javascript:void(0);">
+    <div class="container"><span class="skiplink-text">Skip to main content</span></div>
+</a>
+
+<!-- Docs master nav -->
+<header class="navbar bs-docs-nav navbar-fixed-top">
+    <div class="container inspect-navbar">
+        <div class="item" style="width: 20%">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar"
+                        aria-controls="bs-navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.html" class="navbar-brand">Request Inspect</a>
+            </div>
+        </div>
+        <div class="item" style="width: 60%">
+            <div class="inspect-search">
+                <div class="icon-button"><i class="icon-search"></i></div>
+                <input type="text" id="searchInput" name="searchInput" placeholder="请输入您要过滤的内容">
+                <div class="icon-button hide"><i class="icon-remove-sign"></i></div>
+            </div>
+        </div>
+        <div class="item" style="width: 20%">
+            <nav id="bs-navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="javascript:void(0);">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+<!--<ul class="nav navbar-nav">-->
+<!--<li>-->
+<!--<a href="javascript:void(0);">文档</a>-->
+<!--</li>-->
+<!--</ul>-->
+
+
+<!--<form class="navbar-form navbar-left hide">-->
+<!--<div class="form-group">-->
+<!--<input type="text" class="form-control" placeholder="filter...">-->
+<!--</div>-->
+<!--<button type="button" class="btn btn-default"><i class="icon-filter"></i> 过滤</button>-->
+<!--<button type="button" class="btn btn-default"><i class="icon-refresh"></i> 重置</button>-->
+<!--</form>-->
+
+
+<!-- Page content of course! -->
+<main class="inspect-main" id="content" tabindex="-1">
+    <div class="container">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">请求列表</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover inspect-table">
+                            <thead>
+                            <tr>
+                                <th>Fd</th>
+                                <th>接口地址</th>
+                                <th>请求方法</th>
+                                <th>协议</th>
+                                <th>主机/域名</th>
+                                <th>状态</th>
+                                <th>时间</th>
+                                <th>请求体大小</th>
+                                <th>请求时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-cloak>
+                                <th scope="row"><i class="icon-eye-open"></i></th>
+                                <td>im/message</td>
+                                <td>GET</td>
+                                <td>https</td>
+                                <td>qaapi.demo.com</td>
+                                <td>34kb</td>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="btn-group fd-tab" role="group">
+                                                <button type="button" class="btn btn-default">Preview</button>
+                                                <button type="button" class="btn btn-default">Request-Headers</button>
+                                                <button type="button" class="btn btn-default">Request-Parameters
+                                                </button>
+                                                <button type="button" class="btn btn-default">Request-Cookies</button>
+                                                <button type="button" class="btn btn-default">Response-Body</button>
+                                                <button type="button" class="btn btn-default">Response-Headers</button>
+                                                <button type="button" class="btn btn-default">Response-Cookies</button>
+                                            </div>
+                                            <div class="fd-body">
+                                                <h4>General</h4>
+                                                <ul class="list-unstyled">
+                                                    <li><strong>Request URL: </strong> https://api.demo.com/pc/api/user/info?token=6pq5hea6rmghanie
+                                                    </li>
+                                                    <li><strong>Request Method: </strong> GET</li>
+                                                    <li><strong>Status Code: </strong> 200 OK</li>
+                                                    <li><strong>Remote Address: </strong> 115.239.204.31:443</li>
+                                                    <li><strong>Referrer Policy: </strong> GET</li>
+                                                </ul>
+
+                                                <h4>Response Headers</h4>
+                                                <ul class="list-unstyled">
+                                                    <li><strong>Request URL: </strong> https://api.demo.com/pc/api/user/info?token=6pq5hea6rmghanie
+                                                    </li>
+                                                    <li><strong>Request Method: </strong> GET</li>
+                                                    <li><strong>Status Code: </strong> 200 OK</li>
+                                                    <li><strong>Remote Address: </strong> 115.239.204.31:443</li>
+                                                    <li><strong>Referrer Policy: </strong> GET</li>
+                                                </ul>
+
+                                                <h4>Query String Parameters</h4>
+                                                <ul class="list-unstyled">
+                                                    <li><strong>Request URL: </strong> https://api.demo.com/pc/api/user/info?token=6pq5hea6rmghanie
+                                                    </li>
+                                                    <li><strong>Request Method: </strong> GET</li>
+                                                    <li><strong>Status Code: </strong> 200 OK</li>
+                                                    <li><strong>Remote Address: </strong> 115.239.204.31:443</li>
+                                                    <li><strong>Referrer Policy: </strong> GET</li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="active">
+                                <th scope="row"><i class="icon-eye-close"></i></th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>22:49:24</td>
+                                <td>200</td>
+                                <td>qaapi.demo.com</td>
+                                <td>/im/message</td>
+                                <td>34kb</td>
+                                <td>https</td>
+                                <td>23ms</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<footer class="bs-docs-footer">
+    <div class="container">
+        <ul class="bs-docs-footer-links">
+            <li><a href="https://github.com/lonisy">GitHub 仓库</a></li>
+            <li><a href="https://github.com/lonisy/#examples">实例</a></li>
+            <li><a href="https://github.com/lonisy/#about">关于</a></li>
+        </ul>
+        <p>本项目源码受 <a rel="license" href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank">MIT</a>开源协议保护，文档受
+            <a rel="license" href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a> 开源协议保护。
+        </p>
+    </div>
+</footer>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
