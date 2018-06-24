@@ -40,7 +40,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="index.php<?php echo !empty($request->server['query_string'])?("?".$request->server['query_string']):''; ?>" class="navbar-brand">Request Inspect</a>
+            <a href="index.php<?php echo !empty($request->server['query_string']) ? ("?" . $request->server['query_string']) : ''; ?>"
+               class="navbar-brand">Request Inspect</a>
         </div>
         <ul class="nav navbar-nav">
             <li>
@@ -62,7 +63,8 @@
         <span class="bs-docs-booticon bs-docs-booticon-lg bs-docs-booticon-outline">RI</span>
         <p class="lead">Request Inspect 可用于移动应用开发调试。服务端需要接入Request Report。让移动开发更迅速、简单。</p>
         <p class="lead">
-            <a href="inspect.php<?php echo !empty($request->server['query_string'])?("?".$request->server['query_string']):''; ?>" class="btn btn-outline-inverse btn-lg">开始调试</a>
+            <a href="inspect.php<?php echo !empty($request->server['query_string']) ? ("?" . $request->server['query_string']) : ''; ?>"
+               class="btn btn-outline-inverse btn-lg">开始调试</a>
         </p>
         <p class="version">当前版本： v1.0.2 | 更新于：2018-06-13</p>
     </div>
@@ -88,6 +90,7 @@
             </div>
         </div>
     </div>
+    <div class="beta-bar"><a href="https://github.com/lonisy/request-inspect">Fork Github</a></div>
 </div>
 
 <footer class="bs-docs-footer">

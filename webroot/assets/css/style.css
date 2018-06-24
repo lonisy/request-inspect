@@ -1354,6 +1354,21 @@ h1[id] {
 @media print {
   a[href]:after {
     content: "" !important; } }
+.beta-bar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 8px 0;
+  z-index: 9999;
+  width: 200px;
+  background-color: #6f5499;
+  color: #fff;
+  text-align: center;
+  transform: translate3d(60px, -24px, 0) rotate(-45deg); }
+  .beta-bar a {
+    color: #fff;
+    text-decoration: none; }
+
 /*# sourceMappingURL=docs.min.css.map */
 
 /*# sourceMappingURL=style.css.map */
