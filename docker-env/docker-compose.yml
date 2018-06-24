@@ -12,7 +12,7 @@ services:
     ports:
       - "9511:9511"
     volumes:
-      - /data/web/inspect.uuzu.com:/data
+      - /data/web/inspect.hwjiao.com:/data
     links:
       - "redis32:redis32con"
     container_name: inspect
