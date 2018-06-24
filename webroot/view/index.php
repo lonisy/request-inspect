@@ -61,7 +61,7 @@
 <main class="bs-docs-masthead" id="content" tabindex="-1">
     <div class="container">
         <span class="bs-docs-booticon bs-docs-booticon-lg bs-docs-booticon-outline">RI</span>
-        <p class="lead">Request Inspect 可用于移动应用开发调试。服务端需要接入Request Report。让移动开发更迅速、简单。</p>
+        <p class="lead">Request Inspect 可用于移动应用API开发调试。服务端需要接入Request Report。让移动开发更迅速、简单。</p>
         <p class="lead">
             <a href="inspect.php<?php echo !empty($request->server['query_string']) ? ("?" . $request->server['query_string']) : ''; ?>"
                class="btn btn-outline-inverse btn-lg">开始调试</a>
