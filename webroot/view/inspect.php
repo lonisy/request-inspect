@@ -141,11 +141,12 @@
                                                             <ul class="data-view-row">
                                                                 <template v-for="(val,key) in tabContent">
                                                                     <li v-if="typeof val != 'object'"><strong>{{key}} : </strong>{{val}}</li>
-
                                                                     <template v-if="typeof val == 'object'"
                                                                               v-for="(sval,skey,sindex) in val">
                                                                         <li v-if="sindex == 0" class="data-view-title"><strong>{{key}}</strong></li>
-                                                                        <li><strong>{{skey}} : </strong>{{sval}}</li>
+                                                                        <div v-if="sindex == 0" v-if="typeof val == 'object'" class="inspect-item-detail">
+                                                                            <pre>{{ showItem(val) }}</pre>
+                                                                        </div>
                                                                     </template>
                                                                 </template>
                                                             </ul>
