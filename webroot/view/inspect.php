@@ -12,8 +12,8 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/inspect.css?t=<?php echo time(); ?>" rel="stylesheet">
+    <link href="assets/css/style.min.css" rel="stylesheet">
+    <link href="assets/css/inspect.min.css?t=<?php echo time(); ?>" rel="stylesheet">
     <link href="assets/Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
@@ -49,39 +49,24 @@
                        class="navbar-brand">Request Inspect</a>
                 </div>
             </div>
-            <div class="item" style="width: 60%">
+            <div class="item" style="width: 55%">
                 <div class="inspect-search">
                     <div class="icon-button"><i class="icon-search"></i></div>
                     <input type="text" id="searchInput" name="searchInput" v-model="filter" placeholder="请输入您要过滤的内容">
-                    <div class="icon-button" v-show="filter" v-on:click="clearSearchInput()"><i class="icon-remove-sign"></i></div>
+                    <div class="icon-button" v-show="filter" v-on:click="clearSearchInput()"><i
+                                class="icon-remove-sign"></i></div>
                 </div>
             </div>
             <div class="item" style="width: 20%">
                 <nav id="bs-navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="javascript:void(0);">About</a></li>
+                    <ul class="nav navbar-nav navbar-right" v-cloak>
+                        <li><a href="javascript:void(0);">请求次数: {{inspect_report_num}}</a></li>
+                        <li><a href="javascript:void(0);">使用人次: {{inspect_user_num}}</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
-
-
-    <!--<ul class="nav navbar-nav">-->
-    <!--<li>-->
-    <!--<a href="javascript:void(0);">文档</a>-->
-    <!--</li>-->
-    <!--</ul>-->
-
-
-    <!--<form class="navbar-form navbar-left hide">-->
-    <!--<div class="form-group">-->
-    <!--<input type="text" class="form-control" placeholder="filter...">-->
-    <!--</div>-->
-    <!--<button type="button" class="btn btn-default"><i class="icon-filter"></i> 过滤</button>-->
-    <!--<button type="button" class="btn btn-default"><i class="icon-refresh"></i> 重置</button>-->
-    <!--</form>-->
-
 
     <!-- Page content of course! -->
     <main class="inspect-main" id="content" tabindex="-1">
@@ -89,7 +74,8 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">请求列表 <span class="pull-right refresh-inspect" v-on:click="refreshTrigger()">刷新</span></h3>
+                    <h3 class="panel-title">请求列表 <span class="pull-right refresh-inspect" v-on:click="refreshTrigger()">刷新</span>
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -112,8 +98,11 @@
                                 <tbody>
 
                                 <template v-for="(item, index) in items">
-                                    <tr v-on:click="showItemTrigger(index)" v-bind:class="{ 'selected': item.selected }">
-                                        <td scope="row"><i v-bind:class="[item.show ? 'icon-eye-open' : 'icon-eye-close']"></i></td>
+                                    <tr v-on:click="showItemTrigger(index)"
+                                        v-bind:class="{ 'selected': item.selected }">
+                                        <td scope="row"><i
+                                                    v-bind:class="[item.show ? 'icon-eye-open' : 'icon-eye-close']"></i>
+                                        </td>
                                         <td>{{item.info.RequestTime}}</td>
                                         <td>{{item.info.PathInfo}}</td>
                                         <td>{{item.info.Method}}</td>
@@ -125,17 +114,48 @@
                                     </tr>
                                     <tr v-if="item.show">
                                         <td colspan="9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="inspect-item-detail">
-                                                        <pre>{{ showItem(item) }}</pre>
-                                                    </div>
+                                            <div class="bs-example bs-example-tabs bs-example-data-view">
+                                                <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                                                    <template v-if="tab != 'show'"
+                                                              v-for="(tabContent, tab) in item">
+
+                                                        <li v-bind:class="[tab =='info' ? 'active' : '']"
+                                                            role="tab">
+
+                                                            <a v-bind:href="'#data-' + index + '-' + tab"
+                                                               v-bind:id="'data-' + index + '-' + tab + '-tab'"
+                                                               v-bind:aria-expanded="[tab =='info' ? 'true' : 'false']"
+                                                               role="tab"
+                                                               data-toggle="tab">{{tab}}</a></li>
+                                                    </template>
+                                                </ul>
+                                                <div id="myTabContent" class="tab-content">
+                                                    <template v-if="tab != 'show'"
+                                                              v-for="(tabContent, tab) in item"
+                                                    >
+                                                        <div role="tabpanel" class="tab-pane fade"
+                                                             v-bind:class="[tab =='info' ? 'active in' : '']"
+                                                             v-bind:id="'data-' + index + '-' + tab"
+                                                             v-bind:aria-labelledby="'data-' + index + '-' + tab + '-tab'"
+                                                        >
+                                                            <ul class="data-view-row">
+                                                                <template v-for="(val,key) in tabContent">
+                                                                    <li v-if="typeof val != 'object'"><strong>{{key}} : </strong>{{val}}</li>
+
+                                                                    <template v-if="typeof val == 'object'"
+                                                                              v-for="(sval,skey,sindex) in val">
+                                                                        <li v-if="sindex == 0" class="data-view-title"><strong>{{key}}</strong></li>
+                                                                        <li><strong>{{skey}} : </strong>{{sval}}</li>
+                                                                    </template>
+                                                                </template>
+                                                            </ul>
+
+                                                        </div>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-
-
                                 </template>
 
                                 <tr>

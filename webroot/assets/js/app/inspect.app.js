@@ -1,11 +1,13 @@
 var inspect = new Vue({
                           el     : '#inspect-app',
                           data   : {
-                              filter : '',
-                              ws     : null,
-                              loading: true,
-                              items  : [],
-                              maxlen : 100,
+                              filter            : '',
+                              ws                : null,
+                              loading           : true,
+                              items             : [],
+                              maxlen            : 200,
+                              inspect_report_num: 0,
+                              inspect_user_num  : 0,
                           },
                           methods: {
                               initWebSocket   : function () {
@@ -15,7 +17,7 @@ var inspect = new Vue({
                                       host     : document.domain,
                                       port     : 9511,
                                       connect  : function () {
-                                          that.ws           = new WebSocket(this.protocol + "://" + this.host + ":"+this.port);
+                                          that.ws           = new WebSocket(this.protocol + "://" + this.host + ":" + this.port);
                                           that.ws.onopen    = this.onOpen;
                                           that.ws.onmessage = this.onMessage;
                                           that.ws.onclose   = this.onClose;
@@ -46,6 +48,9 @@ var inspect = new Vue({
                                           var message = JSON.parse(event.data);
                                           if (message.type == 'report') {
 
+                                              that.inspect_report_num = message.info.inspect_report_num;
+                                              that.inspect_user_num   = message.info.inspect_user_num;
+
                                               // 如果达到100条，重新开始监听
                                               if (that.items.length >= that.maxlen) {
                                                   that.items = [];
@@ -59,7 +64,11 @@ var inspect = new Vue({
                                                   that.loading = false;
                                               }
                                               that.items.push(message.data);
+                                          } else if (message.type == 'login') {
+                                              that.inspect_report_num = message.inspect_report_num;
+                                              that.inspect_user_num   = message.inspect_user_num;
                                           }
+
                                           if (typeof event.data === String) {
                                               console.log("Received data string");
                                           }

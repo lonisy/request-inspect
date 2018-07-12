@@ -13,7 +13,7 @@ table.inspect-table {
   //}
 
   th, td {
-    padding: 4px 8px!important;
+    padding: 4px 8px !important;
     cursor: pointer;
   }
   .selected {
@@ -162,3 +162,38 @@ table.inspect-table {
   opacity: 0.7;
   font-size: 13px;
 }
+
+.bs-example-data-view{
+  margin: 4px auto;
+}
+.bs-example-data-view:after {
+  content: "PREVIEW";
+}
+
+ul.data-view-row {
+  cursor: default;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  strong {
+    color: #333333;
+  }
+  li {
+    text-indent: 1em;
+  }
+  .data-view-title {
+    text-indent: 0em;
+    line-height: 30px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    strong {
+      color: #959595;
+    }
+  }
+}
+
+[v-cloak] {
+  display: none;
+}
+

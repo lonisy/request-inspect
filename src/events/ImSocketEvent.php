@@ -62,6 +62,8 @@ class ImSocketEvent
                     $server->push($frame->fd, 'pong');
                     return;
                 case 'login':
+                    Redis::getInstance()->incr('inspect_user_num');
+
                     $token = $messageData['token'] ?? '';
                     if (empty($token)) {
                         $responseData['msg'] = 'Token cannot be empty!';
@@ -104,10 +106,12 @@ class ImSocketEvent
                     }
 
                     // 响应数据包
-                    $responseData['type']        = $messageData['type'];
-                    $responseData['client_id']   = $frame->fd;
-                    $responseData['client_info'] = $user_info;
-                    $responseData['time']        = date('Y-m-d H:i:s');
+                    $responseData['type']             = $messageData['type'];
+                    $responseData['client_id']        = $frame->fd;
+                    $responseData['client_info']      = $user_info;
+                    $responseData['time']             = date('Y-m-d H:i:s');
+                    $responseData['inspect_user_num'] = Redis::getInstance()->get('inspect_user_num');
+                    $responseData['inspect_report_num'] = Redis::getInstance()->get('inspect_report_num');
 
                     $room_id = $messageData['room_id'] ?? 0;
                     Logger::info("room_id:" . $room_id);

@@ -32,8 +32,6 @@ class ImApiEvent
         $request_uri           = $request->server['request_uri'] ?? '/';
         $response_data['code'] = 0;
 
-        var_dump($request);
-
         try {
             if (is_array($request->get) && !empty($request->get)) {
                 $this->request_data = array_merge($this->request_data, $request->get);
@@ -106,11 +104,17 @@ class ImApiEvent
                     if (empty($room_id)) {
                         return $response->end('inspect error');
                     }
+
+                    Redis::getInstance()->incr('inspect_report_num');
+
                     // 根据 URI 作为房间号，获取房间内连接，循环发消息
-                    $message['type'] = 'report';
-                    $message['data'] = $request->post;
-                    $room_fd_key     = "room:$room_id:fds";
-                    $room_fds        = Redis::getInstance()->sMembers($room_fd_key);
+                    $message['type']                       = 'report';
+                    $message['data']                       = $request->post;
+                    $message['info']['inspect_user_num']   = Redis::getInstance()->get('inspect_user_num');
+                    $message['info']['inspect_report_num'] = Redis::getInstance()->get('inspect_report_num');
+
+                    $room_fd_key = "room:$room_id:fds";
+                    $room_fds    = Redis::getInstance()->sMembers($room_fd_key);
                     if (is_array($room_fds) && !empty($room_fds)) {
                         foreach ($room_fds as $room_fd) {
 //                            var_dump($room_fd);
