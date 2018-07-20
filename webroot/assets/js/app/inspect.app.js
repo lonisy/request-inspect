@@ -58,14 +58,12 @@ var inspect = new Vue({
                                               // 搜索业务
                                               // 后端传输过来的 json 中含有 前倒符号
                                               if (that.filter != '') {
-                                                  // 只有在匹配到的时候才显示
+                                                  // 只有在匹配到的时候才高亮
                                                   if ((JSON.stringify(message).indexOf(that.filter) != -1)) {
                                                       message.data.selected = true;
-                                                      that.items.push(message.data);
                                                   }
-                                              } else {
-                                                  that.items.push(message.data);
                                               }
+                                              that.items.push(message.data);
                                               if (that.loading) {
                                                   that.loading = false;
                                               }
