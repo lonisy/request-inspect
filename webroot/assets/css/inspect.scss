@@ -163,9 +163,10 @@ table.inspect-table {
   font-size: 13px;
 }
 
-.bs-example-data-view{
+.bs-example-data-view {
   margin: 4px auto;
 }
+
 .bs-example-data-view:after {
   content: "PREVIEW";
 }
@@ -196,4 +197,78 @@ ul.data-view-row {
 [v-cloak] {
   display: none;
 }
+
+.loader {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: calc(1em * 7 + 0.15em * 6);
+  height: 1.1em;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+table {
+  margin-bottom: 0px !important;
+}
+
+table tr:last-child:hover {
+
+  background-color: initial;
+}
+
+table td:last-child {
+  cursor: default;
+}
+
+.loader span {
+  width: 1em;
+  background-color: #6f5499;
+  border-radius: 0.2em;
+  transform: skewX(-25deg) scale(0.1);
+  animation: animate 0.8s infinite alternate;
+  filter: opacity(0);
+  animation-delay: calc((var(--n) - 1) * 0.2s);
+}
+
+@keyframes animate {
+  to {
+    filter: opacity(1);
+    transform: skewX(-25deg) scale(1);
+  }
+}
+
+.loader span:nth-child(1) {
+  --n: 1;
+}
+
+.loader span:nth-child(2) {
+  --n: 2;
+}
+
+.loader span:nth-child(3) {
+  --n: 3;
+}
+
+.loader span:nth-child(4) {
+  --n: 4;
+}
+
+.loader span:nth-child(5) {
+  --n: 5;
+}
+
+.loader span:nth-child(6) {
+  --n: 6;
+}
+
+.loader span:nth-child(7) {
+  --n: 7;
+}
+
+
+
+
+
+
 

@@ -49,7 +49,7 @@
                        class="navbar-brand">Request Inspect</a>
                 </div>
             </div>
-            <div class="item" style="width: 55%">
+            <div class="item" style="width: 50%">
                 <div class="inspect-search">
                     <div class="icon-button"><i class="icon-search"></i></div>
                     <input type="text" id="searchInput" name="searchInput" v-model="filter" placeholder="请输入您要过滤的内容">
@@ -57,7 +57,7 @@
                                 class="icon-remove-sign"></i></div>
                 </div>
             </div>
-            <div class="item" style="width: 20%">
+            <div class="item" style="width: 25%">
                 <nav id="bs-navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right" v-cloak>
                         <li><a href="javascript:void(0);">请求次数: {{inspect_report_num}}</a></li>
@@ -85,13 +85,14 @@
                                 <thead>
                                 <tr>
                                     <th>Fd</th>
+                                    <th>ID</th>
                                     <th>请求时间</th>
                                     <th width="30%">接口地址</th>
                                     <th>请求方法</th>
                                     <th>状态</th>
                                     <th width="18%">主机/域名</th>
                                     <th>协议</th>
-                                    <th>请求体大小</th>
+                                    <th>大小</th>
                                     <th>响应时长</th>
                                 </tr>
                                 </thead>
@@ -103,56 +104,67 @@
                                         <td scope="row"><i
                                                     v-bind:class="[item.show ? 'icon-eye-open' : 'icon-eye-close']"></i>
                                         </td>
+                                        <td>{{index+1}}</td>
                                         <td>{{item.info.RequestTime}}</td>
                                         <td>{{item.info.PathInfo}}</td>
                                         <td>{{item.info.Method}}</td>
                                         <td>{{item.info.Status}}</td>
                                         <td>{{item.info.Host}}</td>
-                                        <td>{{item.info.Port}}</td>
-                                        <td>0kb</td>
+                                        <td>{{item.info.Port||'80'}}</td>
+                                        <td>{{item.info.Len||'0kb'}}</td>
                                         <td>{{item.info.RunTime}}</td>
                                     </tr>
                                     <tr v-if="item.show">
-                                        <td colspan="9">
-                                            <div class="bs-example bs-example-tabs bs-example-data-view">
-                                                <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                                                    <template v-if="tab != 'show'"
-                                                              v-for="(tabContent, tab) in item">
+                                        <td colspan="10">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="bs-example bs-example-tabs bs-example-data-view">
+                                                        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                                                            <template v-if="tab != 'show'"
+                                                                      v-for="(tabContent, tab) in item">
 
-                                                        <li v-bind:class="[tab =='info' ? 'active' : '']"
-                                                            role="tab">
+                                                                <li v-bind:class="[tab =='info' ? 'active' : '']"
+                                                                    role="tab">
 
-                                                            <a v-bind:href="'#data-' + index + '-' + tab"
-                                                               v-bind:id="'data-' + index + '-' + tab + '-tab'"
-                                                               v-bind:aria-expanded="[tab =='info' ? 'true' : 'false']"
-                                                               role="tab"
-                                                               data-toggle="tab">{{tab}}</a></li>
-                                                    </template>
-                                                </ul>
-                                                <div id="myTabContent" class="tab-content">
-                                                    <template v-if="tab != 'show'"
-                                                              v-for="(tabContent, tab) in item"
-                                                    >
-                                                        <div role="tabpanel" class="tab-pane fade"
-                                                             v-bind:class="[tab =='info' ? 'active in' : '']"
-                                                             v-bind:id="'data-' + index + '-' + tab"
-                                                             v-bind:aria-labelledby="'data-' + index + '-' + tab + '-tab'"
-                                                        >
-                                                            <ul class="data-view-row">
-                                                                <template v-for="(val,key) in tabContent">
-                                                                    <li v-if="typeof val != 'object'"><strong>{{key}} : </strong>{{val}}</li>
-                                                                    <template v-if="typeof val == 'object'"
-                                                                              v-for="(sval,skey,sindex) in val">
-                                                                        <li v-if="sindex == 0" class="data-view-title"><strong>{{key}}</strong></li>
-                                                                        <div v-if="sindex == 0" v-if="typeof val == 'object'" class="inspect-item-detail">
-                                                                            <pre>{{ showItem(val) }}</pre>
-                                                                        </div>
-                                                                    </template>
-                                                                </template>
-                                                            </ul>
+                                                                    <a v-bind:href="'#data-' + index + '-' + tab"
+                                                                       v-bind:id="'data-' + index + '-' + tab + '-tab'"
+                                                                       v-bind:aria-expanded="[tab =='info' ? 'true' : 'false']"
+                                                                       role="tab"
+                                                                       data-toggle="tab">{{tab}}</a></li>
+                                                            </template>
+                                                        </ul>
+                                                        <div id="myTabContent" class="tab-content">
+                                                            <template v-if="tab != 'show'"
+                                                                      v-for="(tabContent, tab) in item"
+                                                            >
+                                                                <div role="tabpanel" class="tab-pane fade"
+                                                                     v-bind:class="[tab =='info' ? 'active in' : '']"
+                                                                     v-bind:id="'data-' + index + '-' + tab"
+                                                                     v-bind:aria-labelledby="'data-' + index + '-' + tab + '-tab'"
+                                                                >
+                                                                    <ul class="data-view-row">
+                                                                        <template v-for="(val,key) in tabContent">
+                                                                            <li v-if="typeof val != 'object'"><strong>{{key}}
+                                                                                    : </strong>{{val}}
+                                                                            </li>
+                                                                            <template v-if="typeof val == 'object'"
+                                                                                      v-for="(sval,skey,sindex) in val">
+                                                                                <li v-if="sindex == 0"
+                                                                                    class="data-view-title"><strong>{{key}}</strong>
+                                                                                </li>
+                                                                                <div v-if="sindex == 0"
+                                                                                     v-if="typeof val == 'object'"
+                                                                                     class="inspect-item-detail">
+                                                                                    <pre>{{ showItem(val) }}</pre>
+                                                                                </div>
+                                                                            </template>
+                                                                        </template>
+                                                                    </ul>
 
+                                                                </div>
+                                                            </template>
                                                         </div>
-                                                    </template>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -160,12 +172,24 @@
                                 </template>
 
                                 <tr>
-                                    <td colspan="9">
-                                        <div align="center"><i class="icon-spinner icon-spin icon-2x"></i></div>
+                                    <td colspan="10">
+                                        <div align="center">
+                                            <div class="loader">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+
+
                         </div>
                     </div>
                 </div>
