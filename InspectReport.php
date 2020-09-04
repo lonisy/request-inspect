@@ -26,17 +26,17 @@ class InspectReport
         if (YII_ENV == 'prod') {
             return;
         }
-        $inspect_host = 'devtv.youzu.com';
+        $inspect_host = 'devtv.github.com';
         if (YII_ENV == 'qa') {
-            $inspect_host = 'qatv.youzu.com';
+            $inspect_host = 'qatv.github.com';
         } else if (YII_ENV == 'prv') {
-            $inspect_host = 'prvtv.youzu.com';
+            $inspect_host = 'prvtv.github.com';
         } else if (YII_ENV == 'prod-us') {
-            $inspect_host = 'tv-us.gtarcade.com';
+            $inspect_host = 'tv-us.github.com';
         }
         $request        = Yii::$app->request;
         $response       = Yii::$app->response;
-        $url            = 'http://inspect.uuzu.com/report?inspect=' . $inspect_host;
+        $url            = 'http://inspect.github.com/report?inspect=' . $inspect_host;
         $requestHeaders = [];
         foreach ($request->getHeaders() as $key => $val) {
             $requestHeaders[strtoupper($key)] = $val[0] ?? '';
@@ -84,15 +84,15 @@ class InspectReport
         if (YII_ENV == 'prod') {
             return;
         }
-        $inspect_host = 'devtv.youzu.com';
+        $inspect_host = 'devtv.github.com';
         if (YII_ENV == 'qa') {
-            $inspect_host = 'qatv.youzu.com';
+            $inspect_host = 'qatv.github.com';
         } else if (YII_ENV == 'prv') {
-            $inspect_host = 'prvtv.youzu.com';
+            $inspect_host = 'prvtv.github.com';
         } else if (YII_ENV == 'prod-us') {
-            $inspect_host = 'tv-us.gtarcade.com';
+            $inspect_host = 'tv-us.github.com';
         }
-        $url  = 'http://inspect.uuzu.com/report?inspect=' . $inspect_host;
+        $url  = 'http://inspect.github.com/report?inspect=' . $inspect_host;
         $data = [
             'info'     => [
                 'Url'         => $params['url'] ?? '-',
